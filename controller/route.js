@@ -8,7 +8,6 @@ const AuctionSchema = require('../model/AuctionSchema')
 const CardDetSchema = require('../model/CardDetSchema')
 
 
-
 router.get('/cart/:email',(req,res,next)=>{
     const emailToFind = req.params.email;
     AuctionSchema.find({buyer:emailToFind},(error,data)=>{
@@ -30,7 +29,6 @@ router.put('/update/:id', (req, res) => {
         console.error('Error updating user:', error);
         res.status(500).json({ error: 'An error occurred while updating the user' });
       } else if (user) {
-        //console.log(user);
         res.json(user);
       } else {
         res.status(404).json({ error: 'User not found' });
@@ -46,7 +44,6 @@ router.get('/item-details/:id',(req,res,next)=>{
             return next(error);
         }
         else{
-            //console.log(data);
             res.json(data);
         }
     })
@@ -64,6 +61,31 @@ router.get('/user-details/:email',(req,res,next)=>{
     })
 })
 
+router.get('/user-details/:email',(req,res,next)=>{
+  const emailToFind = req.params.email;
+  User.find({email:emailToFind},(error,data)=>{
+      if(error){
+          return next(error);
+      }
+      else{
+          res.json(data);
+      }
+  })
+})
+router.delete('/del/:id', (req, res) => {
+  const userId = req.params.id;
+
+  AuctionSchema.findByIdAndDelete(userId, (error, deletedUser) => {
+    if (error) {
+      console.error('Error deleting user:', error);
+      res.status(500).json({ error: 'An error occurred while deleting the user' });
+    } else if (deletedUser) {
+      res.json(deletedUser);
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
+  });
+});
 router.get('/card',(req,res,next)=>{
 
     schema_card.find((error,data)=>{
@@ -127,7 +149,7 @@ router.post('/signup', async (req, res) => {
         if (user) {
         res.status(201).json("exist");
         } else {
-        const newUser = new schema_users({ name, email, password, mobNo });
+        const newUser = new User({ name, email, password, mobNo });
         await newUser.save();
         res.status(201).json("not exist");
         }
@@ -139,7 +161,6 @@ router.post('/signup', async (req, res) => {
 
 const crt_det = async(req, res) => {
   try {
-    //console.log(req.body);
     const cdet = await CardDetSchema.create(req.body);
     res.status(200).json(cdet);
   } catch (error) {
@@ -211,8 +232,7 @@ router.get('/get_amt/:id', get_price);
 router.put('/upd-amt/:id', upd_amt);
 router.post('/create-cart', crt_det);
 router.use(cors({
-    origin: ["*"] // List of allowed origins
+    origin: ["*"] 
   }));
 
 module.exports = router;
-

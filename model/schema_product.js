@@ -12,7 +12,5 @@ const productSchema = new mongoose.Schema({
     buyer: String,
     images: [String],
   });
-/*
-Schema({obj},{collection})
-*/
+
 module.exports = mongoose.model('Product',productSchema);

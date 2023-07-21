@@ -23,7 +23,4 @@ const schema_users = new Schema({
 {
     collection: "users"
 });
-/*
-Schema({obj},{collection})
-*/
 module.exports = User = mongoose.model('users', schema_users);

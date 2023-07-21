@@ -8,8 +8,6 @@ const schema = new Schema({
 },
 {
     collection: "sample1"
-});
-/*
-Schema({obj},{collection})
-*/
+    });
+
 module.exports = mongoose.model('sample1',schema);
