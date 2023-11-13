@@ -4,7 +4,7 @@ const multer = require('multer');
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const route = require("./controller/route");
-const cloudinary = require('cloudinary').v2;
+const cloudinary = require('cloudinary');
 const path = require('path');
 const PORT = 4500;
 mongoose.set('strictQuery', true);
